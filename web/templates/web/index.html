@@ -1,0 +1,161 @@
+{% extends 'main.html'%} 
+{% load static %}
+{% block content %}
+
+  <div class="blog">
+    <div class="info-box">
+      <div class="info-mask"></div>
+      <div class="info-content">
+        <div class="info-avator"></div>
+        <div class="avator-box">
+          <img id="info-avator" src="{{user.avator}}" alt="头像" width="20%" />
+        </div>
+        
+        <div class="info-text">
+          <div class="info-username">{{user.username}}</div>
+          <div class="info-bio">{{user.bio}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-list">
+      {% for post in posts %}
+     
+      {% if post.id|divisibleby:2 %}
+      <div class="page-item"> 
+        <div class="row">
+          <div class="col-6">
+            <div class="page-item-img">
+              <img src="{% static 'images/p-0.png' %}" alt="images" width="400"  style="border-radius: 10px;"/>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="page-item-info">
+              <p>{{ post.create_time|date:"Y-m-d" }}</p>
+              <a href="#">
+                <h3>{{ post.title }}</h3>
+                <h4>{{ post.subtitle }}</h4>
+              </a>
+              <hr>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="page-item"> 
+        <div class="row">
+
+          <div class="col-6">
+            <div class="page-item-info">
+              <p>{{ post.create_time|date:"Y-m-d" }}</p>
+              <a href="#">
+                <h3>{{ post.title }}</h3>
+                <h4>{{ post.subtitle }}</h4>
+              </a>
+              <hr>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="page-item-img">
+              <img src="{% static 'images/p-1.png' %}" alt="images" width="400"  style="border-radius: 10px;"/>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+      {% endif %}
+    
+      {% endfor %}
+    </div>
+      
+  </div>  
+
+<style>
+  .blog {
+    width: 100%;
+    background: url("{% static '/images/p-1.png' %}") no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+  .info-mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  .page-item-img {
+    margin: 0 auto;
+  }
+  .page-item-info {
+    margin: 20px 20px auto;
+    border-radius: 10px;
+  }
+  .page-item {
+    margin: 80px auto;
+    margin-top: 50px;
+    max-width: 800px;
+  }
+  .page-list {
+    padding-top: 40px;
+    background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+    min-height: 100vh;
+  }
+  .page-item-info>a {
+    text-decoration: none;
+  }
+  .page-item-info>a:hover h3{
+    color: #78C2AD;
+  }
+  .page-item-info>a:hover h4{
+    color: #78C2AD;
+  }
+  .info-box {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #info-avator {
+    border-radius: 100%;
+    padding: 5px; 
+    box-shadow: inset 0 0 20px #000;
+    transition: all 1s ease;
+  }
+
+  #info-avator:hover {
+    cursor: copy;
+    transform: rotate(360deg);
+    transition: all 1s ease;
+  }
+
+  .info-username {
+    margin-top: 30px;
+    padding-top: 20px;
+    font-weight: 900;
+  }
+
+  .info-bio {
+    margin-top: 10px;
+    padding-bottom: 10px;
+  }
+ 
+
+  .info-text {
+    box-shadow: inset 0 0 10px #000;
+    width: 500px;
+    color: #ffffff;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #000;
+    opacity: 0.5;
+  }
+  .info-content {
+    text-align: center;
+  }
+  
+</style>
+
+{% endblock %}

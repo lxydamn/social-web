@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+  <div class="container" style=" width: 400px;">
+    <form class="row g-3" style="margin-top: 12%;" action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            <input type="text" name="username" class="form-control" id="floatingInput" placeholder="username">
+            <label for="floatingInput">username</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+        </div>
+        <a href="{% url 'register' %}">没有账号? 点击跳转注册</a>
+        <div class="text-center">
+            <button type="submit" class="btn btn-secondary btn-lg" style="width:150px; text-align: center;">登录</button>
+        </div>
+    </form>
+  </div>
+
+{% endblock %}
