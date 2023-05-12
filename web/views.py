@@ -1,3 +1,5 @@
+
+import random
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib import messages
@@ -20,11 +22,29 @@ def index(request):
 
 def topics(request) :
 
-    posts = Postings.objects.all().order_by('create_time')
+    posts = Postings.objects.all().order_by('?')[:10]
 
-    context = {'isactive':'topics', 'posts':posts[:10]}
+    context = {'isactive':'topics', 'posts':posts, 'topics_active':'commend'}
 
     return render(request, 'web/topics.html', context=context)
+
+def topics_recent(request) :
+
+    posts = Postings.objects.all().order_by('-create_time')
+
+    context = {'isactive':'topics', 'posts':posts[:10], 'topics_active':'recent'}
+
+    return render(request, 'web/topics.html', context=context)
+
+def topics_hot(request) :
+
+    posts = Postings.objects.all()[:10]
+
+    context = {'isactive':'topics', 'posts':posts, 'topics_active':'hot'}
+
+    return render(request, 'web/topics.html', context=context)
+
+
 
 def loginPage(request):
 

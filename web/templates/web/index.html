@@ -21,7 +21,7 @@
     <div class="page-list">
       {% for post in posts %}
      
-      {% if post.id|divisibleby:2 %}
+      {% if forloop.counter|divisibleby:2 %}
       <div class="page-item"> 
         <div class="row">
           <div class="col-6">
@@ -100,6 +100,7 @@
     padding-top: 40px;
     background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
     min-height: 100vh;
+    padding-bottom: 50px;
   }
   .page-item-info>a {
     text-decoration: none;
