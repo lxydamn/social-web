@@ -1,0 +1,88 @@
+{% extends 'main.html' %} {% block content %}
+<div class="container">
+  <div class="update-form mx-auto">
+    <form class="row g-3" action="{% url 'updateUser' %}" method="POST">
+      {% csrf_token %}
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1"
+          >用户昵称是唯一的</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Username 用户昵称"
+          name="username"
+          value="{{user.username}}"
+        />
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">xxx@example.com</span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="用户的邮箱"
+          name="email"
+          value="{{user.email}}"
+          aria-label="Recipient's username"
+          aria-describedby="basic-addon2"
+        />
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon3">https://xxxxx</span>
+        <input
+          type="text"
+          placeholder="用户的头像链接"
+          name="avator"
+          value="{{ user.avator }}"
+          class="form-control"
+          id="basic-url"
+          aria-describedby="basic-addon3"
+        />
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-text">用户的个性简介</span>
+        <textarea class="form-control" id="user-bio" name="bio" aria-label="With textarea"></textarea>
+        <button type="button" id="generateBio" onclick="genBio();" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+            </svg>
+        随机生成</button>
+      </div>
+      <div class="mx-auto">
+
+        <span><div class="message-box">{{message}}</div></span>
+        <button type="submit" class="btn btn-primary mb-3">
+          上传更新
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+    document.getElementById('user-bio').value = "{{user.bio}}"
+
+    function genBio() {
+        fetch('https://v1.hitokoto.cn')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                document.getElementById('user-bio').value = data.hitokoto
+            })
+
+    }
+
+
+</script>
+
+</script>
+<style>
+  .update-form {
+    width: 50%;
+    margin-top: 50px;
+  }
+</style>
+{% endblock %}

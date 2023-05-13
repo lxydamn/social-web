@@ -72,10 +72,39 @@ def loginPage(request):
     context = {'page': page}
     return render(request, 'web/signin.html', context)
 
+def updateUser(request):
+    
+    message = ''
+    if request.method == 'POST':
+
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        bio = request.POST.get('bio')
+        avator = request.POST.get('avator')
+
+        try :
+            user = User.objects.get(username=username)
+        
+            user.avator = avator
+            user.bio = bio
+            user.email = email
+            
+            user.save()
+
+        except :
+            message = '更新失败'
+
+    context = {'message': message}
+
+    return render(request, 'web/update_user.html', context) 
 
 def logoutUser(request) :
     logout(request)
     return redirect('index')
+
+def createPost(request) :
+
+    return render(request, 'web/create_post.html', {'isactive':'createPost'})
 
 
 def registerPage(request):

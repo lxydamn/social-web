@@ -1,0 +1,21 @@
+{% extends 'main.html' %} 
+
+{% load static %} 
+
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+<div class="container">
+    <textarea name="post-content" id="MyID" cols="30" rows="10"></textarea>
+</div>
+
+
+<script>
+    var simplemde = new SimpleMDE({ element: document.getElementById("MyID") });
+ </script>
+
+
+{% endblock %}
