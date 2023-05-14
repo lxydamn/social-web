@@ -1,5 +1,5 @@
 {% extends 'main.html' %} {% block content %}
-<div class="container">
+<div class="update-container container">
   <div class="update-form mx-auto">
     <form class="row g-3" action="{% url 'updateUser' %}" method="POST">
       {% csrf_token %}
@@ -52,10 +52,10 @@
             </svg>
         随机生成</button>
       </div>
-      <div class="mx-auto">
+      <div class="mx-auto text-center">
 
         <span><div class="message-box">{{message}}</div></span>
-        <button type="submit" class="btn btn-primary mb-3">
+        <button type="submit" class="btn btn-primary mb-3" style="width: 20%">
           上传更新
         </button>
       </div>
@@ -66,6 +66,7 @@
     document.getElementById('user-bio').value = "{{user.bio}}"
 
     function genBio() {
+
         fetch('https://v1.hitokoto.cn')
             .then(response => response.json())
             .then(data => {
@@ -80,6 +81,9 @@
 
 </script>
 <style>
+  .update-container {
+    height: 100vh;
+  }
   .update-form {
     width: 50%;
     margin-top: 50px;

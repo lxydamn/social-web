@@ -12,10 +12,10 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
 class Postings(models.Model):
-    id = models.BigIntegerField(primary_key=True)
-    username = models.CharField(max_length=100, blank=False)
-    content = models.TextField(max_length=1000, blank=False)
-    title = models.CharField(max_length=50, blank=False)
-    subtitle = models.CharField(max_length=100, blank=False)
+    id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=100, null=False, blank=False)
+    content = models.TextField(max_length=10000,null=False, blank=False)
+    title = models.CharField(max_length=50,null=False, blank=False)
+    subtitle = models.CharField(max_length=100,null=False, blank=False)
     create_time = models.DateTimeField(default = datetime.datetime.now())
     update_time = models.DateTimeField(auto_now=True)

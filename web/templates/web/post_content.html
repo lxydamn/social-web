@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="view-container container">
+    <div id="editor">
+        <textarea style="display: none; background-color: rgba(0, 0, 0, 0);">{{post.content}}</textarea>
+    </div>
+</div>
+
+<link rel="stylesheet" href="{% static 'editor.md/css/editormd.preview.css' %}" />
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="{% static 'editor.md/editormd.min.js' %}"></script>
+<script src="{% static 'editor.md/lib/marked.min.js' %}"></script>
+<script src="{% static 'editor.md/lib/prettify.min.js' %}"></script>
+<script>
+
+    $(function () {
+         var editor = editormd.markdownToHTML("editor", {
+            htmlDecode :"style, script, iframe",
+            emoji           : true,
+            taskList        : true,
+            tex             : true,  // 默认不解析
+            flowChart       : true,  // 默认不解析
+            sequenceDiagram : true,  // 默认不解析
+        });
+    })
+
+
+</script>
+
+<style>
+    #editor{
+        margin-top: 30px;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    .view-container {
+        height: 100vh;
+    }
+</style>
+{% endblock %}

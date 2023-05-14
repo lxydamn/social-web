@@ -25,9 +25,10 @@ SECRET_KEY = 'django-insecure-v_4ww1pvj9l%+dk(1^sysp+xuz(@f1jo9yggys+b#-cx4@xoov
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
-
+CORS_ORIGIN_ALLOW_ALL = True    # 允许任意站点跨域请求
+CORS_ALLOW_CREDENTIALS = True   # 允许发送身份验证
 # Application definition
 
 INSTALLED_APPS = [

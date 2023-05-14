@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="back">
-    <div class="container">
+    <div class="topics-container container">
         <ul id="topics-nav" class="nav nav-tabs">
             <li class="nav-item">
               <a class="nav-link {% if topics_active == 'commend' %} active {% endif %}" href="{% url 'topics' %}">
@@ -23,9 +23,11 @@
             {% for post in posts %}
             <div class="post-card card mx-auto">
               <img src="https://api.likepoems.com/img/pc?id={{post.id}}" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h3 class="card-title"">{{post.title}}</h3>
-                <p class="card-text">{{post.subtitle}}</p>
+              <div class="post-card card-body">
+                <a href="{% url 'postContent' post.id %}">
+                  <h3>{{ post.title }}</h3>
+                  <h4>{{ post.subtitle }}</h4>
+                </a>
               </div>
               <div class="card-footer text-muted">
                 作者：{{post.username}} 时间：{{post.create_time|date:"Y-m-d H:i:s"}}
@@ -33,20 +35,20 @@
             </div>
             {% endfor %}
         </div>
-   
-
     </div>
     <style>
+        a {
+          text-decoration: none;
+        }
         #topics-nav {
             margin-bottom: 20px;
         }
         .post-card img {
           border-radius: 10px 10px 0 0;
         }
-        /* .back {
-          background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
-          padding-bottom: 50px;
-        } */
+        .topics-container {
+          padding-top: 30px;
+        }
         .post-card {
           margin-top: 30px;
           width: 50%;

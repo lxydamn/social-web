@@ -1,21 +1,94 @@
-{% extends 'main.html' %} 
-
-{% load static %} 
-
-
-{% block content %}
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-
-<div class="container">
-    <textarea name="post-content" id="MyID" cols="30" rows="10"></textarea>
-</div>
+{% extends 'main.html' %} {% load static %} {% block content %}
+<link rel="stylesheet" href="{% static 'editor.md/css/editormd.min.css' %}" />
 
 
-<script>
-    var simplemde = new SimpleMDE({ element: document.getElementById("MyID") });
- </script>
+<form class="upload-container container" action="{% url 'createPost' %}" method="POST" onsubmit="return check()">
+    {% csrf_token %}
+    <div class="editor-md" id="editor">
+        <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
+        <textarea name="content" id="content" style="display:none;"></textarea>
+    </div>
+    <div class="upload-box mx-auto text-center">
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">文章标题</label>
+            <div class="col-sm-10">
+              <input name="title" id="title" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">文章摘要</label>
+            <div class="col-sm-10">
+              <input name="subtitle" type="text" class="form-control" id="subtitle">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3" style="width: 30%;">
+            发布文章
+        </button>
+
+        
+    </div>
+      
+</form>
+
+<!-- <div class="footer-bar fixed-bottom bg-primary">
+
+</div> -->
+
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="{% static 'editor.md/editormd.min.js' %}"></script>
+
+<script type="text/javascript">
+
+    // 提交前检查，这样可保留提交失败后表单中的数据
+    function check() {
+        
+        content = document.getElementById("content").value;
+        
+        if(content.length == 0 || content.length > 10000) {
+            return false;
+        }
+
+        title = document.getElementById('title').value;
+        if(title.length == 0 || title.length > 50) {
+            return false;
+        } 
+
+        subtitle = document.getElementById('subtitle').value;
+
+        if(subtitle.length == 0 || subtitle.length > 100) {
+            return false;
+        }
+    
+        return true;
+    }
 
 
+    $(function() {
+        var editor = editormd("editor", {
+            width: "100%",
+            height: "80vh",
+            // markdown: "xxxx",     // dynamic set Markdown text
+            path : "{% static 'editor.md/lib/' %}", // Autoload modules mode, codemirror, marked... dependents libs path
+            placeholder: "写下你的内容",
+            imageUpload:false,
+        });
+    });
+
+    
+</script>
+
+<style>
+    .upload-box {
+        width: 50%;
+    }
+    .footer-bar {
+        height: 50px;
+    }
+    .editor-md {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    textarea {
+        background-color: rgba(0, 0, 0, 0);
+    }
+</style>
 {% endblock %}

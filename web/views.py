@@ -1,5 +1,5 @@
 
-import random
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib import messages
@@ -16,7 +16,9 @@ def index(request):
 
     posts = Postings.objects.filter(username=request.user.username)
 
-    context = {'user':request.user, 'isactive':isactive, 'posts':posts}
+    paginator = Paginator(posts, 3)
+
+    context = {'user':request.user, 'isactive':isactive, 'posts':paginator.get_page(1), 'page':1}
 
     return render(request, 'web/index.html', context=context)
 
@@ -98,14 +100,74 @@ def updateUser(request):
 
     return render(request, 'web/update_user.html', context) 
 
+# 完成分页
+@login_required(login_url= '/login')
+def indexGetPage(request) :
+    username = request.user.username
+
+    pages = Postings.objects.filter(username=username).order_by('create_time')
+
+    paginator = Paginator(pages, 3)
+    page = ''
+
+    if request.method == 'POST':
+
+        page = int(request.POST.get('page'))
+        
+        next_page = int(request.POST.get('next'))
+
+        if next_page == -1 and paginator.get_page(page).has_previous() :
+            page = page + next_page
+        elif next_page == 1 and paginator.get_page(page).has_next() :
+            page = page + next_page
+
+        else:
+            messages.error(request, '不能再往前辣~')
+    
+    print(paginator.get_page(page).object_list, page)
+    context = {'user':request.user, 'isactive':'index', 'posts':paginator.get_page(page).object_list, 'page': page}
+
+    return render(request, 'web/index.html', context=context)
+
 def logoutUser(request) :
+
     logout(request)
     return redirect('index')
 
 def createPost(request) :
 
-    return render(request, 'web/create_post.html', {'isactive':'createPost'})
+    message = ''
 
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        title = request.POST.get('title')
+        subtitle = request.POST.get('subtitle')
+        username = request.user.username
+
+        if len(content) == 0 or len(title)  == 0 or len(subtitle) == 0 :
+            message = '内容、标题、摘要均不能为空'
+
+        elif len(content) > 10000 or len(title) > 50 or len(subtitle) > 100 :
+            message = '内容(10000)、标题(50)、摘要内容过长(100)'
+        else :
+
+            Postings.objects.create(
+                username=username,
+                content=content,
+                subtitle=subtitle,
+                title=title
+            )
+            return redirect('index')
+
+    context = {'message':message, 'isactive':'createPost'}
+
+    return render(request, 'web/create_post.html', context)
+
+def postContent(request, id):
+    print(id)
+    post = Postings.objects.get(id=id)
+    print(post)
+    return render(request, 'web/post_content.html', {'post':post})
 
 def registerPage(request):
     message = ''
