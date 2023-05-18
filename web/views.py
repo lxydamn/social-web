@@ -29,11 +29,29 @@ def topics(request) :
     context = {'isactive':'topics', 'posts':posts}
 
     return render(request, 'web/topics.html', context=context)
-
+@login_required(login_url='login')
 def message(request):
-    infos = [{'receive':'lxy', 'sender':'test', 'info':'hhhh'}, {'receive':'test', 'sender':'lxy', 'info':'cccc'}]
+    infos = []
+    users = []
 
-    context = {'users':User.objects.all(),'isactive':'message', 'infos': infos}
+    for i in range(1, 20):
+        users.append({'username':i, 'avator':"https://img1.imgtp.com/2023/05/07/8NKt5JEn.png"})
+        if i % 2 == 0:
+            infos.append({
+                'receiver': users[0],
+                'sender':request.user,
+                'message':'sss'
+            })
+        else:
+            infos.append({
+                'sender': users[0],
+                'receiver':request.user,
+                'message':'rrr'
+            })
+
+
+
+    context = {'users': users,'isactive':'message', 'infos': infos}
     return render(request, 'web/message.html', context)
 
 
