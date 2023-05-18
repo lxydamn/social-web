@@ -16,9 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.views import static ##新增
+from django.conf import settings ##新增
+
+from django.urls import re_path as url
 from . import views
 urlpatterns = [
     path("", include("web.urls")),
     path('admin/', admin.site.urls),
+    ##　以下是新增
+    url(r'^static/(?P<path>.*)$', static.serve,
+      {'document_root': settings.STATIC_ROOT}, name='static'),
 ]
 handler404 = views.page_not_found
