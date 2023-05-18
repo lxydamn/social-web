@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<div class="container" style="margin-top: 5vh;">
+    <div class="chat-box row">
+        <div class="col-2">
+            <ul>
+                {% for user in users %}
+                    <li>{{user.username}}</li>
+                {% endfor %}
+            </ul>  
+        </div>
+        <div class="col-10">
+            <div class="info-box">
+                {% for info in infos %}
+                    {% if info.sender == user.username %}
+                    <div class="info-item-right">
+                        <span>{{info.info}}</span>
+                    </div>
+                    {% else %}
+                    <div class="info-item-left">
+                        <span>{{info.info}}</span>
+                    </div>
+                    {% endif%}
+
+                {% endfor %}
+            </div>
+            <div class="input-box">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .info-item-right {
+        justify-content: flex-end;
+    }
+    .chat-box {
+        background-color: aliceblue;
+        height: 80vh;
+        border-radius: 20px;
+    }
+</style>
+{% endblock %}

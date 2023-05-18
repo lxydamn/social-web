@@ -26,26 +26,15 @@ def topics(request) :
 
     posts = Postings.objects.all().order_by('?')[:10]
 
-    context = {'isactive':'topics', 'posts':posts, 'topics_active':'commend'}
+    context = {'isactive':'topics', 'posts':posts}
 
     return render(request, 'web/topics.html', context=context)
 
-def topics_recent(request) :
+def message(request):
+    infos = [{'receive':'lxy', 'sender':'test', 'info':'hhhh'}, {'receive':'test', 'sender':'lxy', 'info':'cccc'}]
 
-    posts = Postings.objects.all().order_by('-create_time')
-
-    context = {'isactive':'topics', 'posts':posts[:10], 'topics_active':'recent'}
-
-    return render(request, 'web/topics.html', context=context)
-
-def topics_hot(request) :
-
-    posts = Postings.objects.all()[:10]
-
-    context = {'isactive':'topics', 'posts':posts, 'topics_active':'hot'}
-
-    return render(request, 'web/topics.html', context=context)
-
+    context = {'users':User.objects.all(),'isactive':'message', 'infos': infos}
+    return render(request, 'web/message.html', context)
 
 
 def loginPage(request):
