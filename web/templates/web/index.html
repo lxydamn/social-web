@@ -4,9 +4,7 @@
 
   <div class="blog">
     <div class="info-box">
-      <div class="info-mask"></div>
       <div class="info-content">
-        <div class="info-avator"></div>
         <div class="avator-box">
           <img id="info-avator" src="{{user.avator}}" alt="头像" width="20%" />
         </div>
@@ -86,7 +84,7 @@
                 <form id="next_page" action="{% url 'getPage' %}" method="POST">
                   {% csrf_token %}
                   <input type="text" name="next" value="1" style="display:none">
-                  <input type="text" name="page" value= {{ page }} style="display:none">
+                  <input type="text" name="page" value= "{{ page }}" style="display:none">
                   <button type="submit" class="btn btn-primary">
                   后一页
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
@@ -105,6 +103,9 @@
 
 </script>
 <style>
+   #info-avator:hover {
+    transform: rotate(360deg);
+  }
   .btn-box {
     margin-top: 50px;
     text-align: center;
@@ -120,11 +121,6 @@
     background: url("{% static '/images/p-1.png' %}") no-repeat;
     background-attachment: fixed;
     background-size: cover;
-  }
-  .info-mask {
-    width: 100%;
-    height: 100%;
-    position: absolute;
   }
   .page-item-img {
     margin: 0 auto;
@@ -160,6 +156,7 @@
     align-items: center;
     justify-content: center;
   }
+  
   #info-avator {
     border-radius: 100%;
     padding: 5px; 
@@ -167,11 +164,7 @@
     transition: all 1s ease;
   }
 
-  #info-avator:hover {
-    cursor: copy;
-    transform: rotate(360deg);
-    transition: all 1s ease;
-  }
+ 
 
   .info-username {
     margin-top: 30px;

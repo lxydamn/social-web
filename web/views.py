@@ -5,8 +5,8 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import User, Postings
-
+from .models import User, Postings, Message
+from django.db.models import Q
 # 若没有登录直接路由到讨论广场
 
 @login_required(login_url= '/topics')
@@ -29,29 +29,33 @@ def topics(request) :
     context = {'isactive':'topics', 'posts':posts}
 
     return render(request, 'web/topics.html', context=context)
+
+
 @login_required(login_url='login')
 def message(request):
-    infos = []
-    users = []
 
-    for i in range(1, 20):
-        users.append({'username':i, 'avator':"https://img1.imgtp.com/2023/05/07/8NKt5JEn.png"})
-        if i % 2 == 0:
-            infos.append({
-                'receiver': users[0],
-                'sender':request.user,
-                'message':'sss'
-            })
+    messages = Message.objects.filter(
+        Q(sender=request.user) | Q(receiver=request.user)
+    )
+
+    users = set()
+    
+    for message in messages:
+        if message.sender == request.user:
+            users.add(message.receiver)
         else:
-            infos.append({
-                'sender': users[0],
-                'receiver':request.user,
-                'message':'rrr'
-            })
+            users.add(message.sender)
+    
+    users = list(users)
 
+    if(len(users) > 0):
+        opponent = users[0]
+        messages = Message.objects.filter(
+            (Q(sender=opponent, receiver=request.user) | Q(sender=request.user, receiver=opponent))
+        )
 
+    context = {'users': users,'isactive':'message', 'opponent':opponent, 'infos':messages}
 
-    context = {'users': users,'isactive':'message', 'infos': infos}
     return render(request, 'web/message.html', context)
 
 
@@ -81,6 +85,7 @@ def loginPage(request):
     context = {'page': page}
     return render(request, 'web/signin.html', context)
 
+@login_required(login_url='login')
 def updateUser(request):
     
     message = ''
@@ -141,6 +146,7 @@ def logoutUser(request) :
     logout(request)
     return redirect('index')
 
+@login_required(login_url='login')
 def createPost(request) :
 
     message = ''
@@ -169,6 +175,18 @@ def createPost(request) :
     context = {'message':message, 'isactive':'createPost'}
 
     return render(request, 'web/create_post.html', context)
+@login_required(login_url='login')
+def chat(request, username) :
+
+    opponent = User.objects.get(username=username)
+    me = request.user
+
+    message = Message.objects.filter(sender=opponent, receiver=me)
+    
+    
+    context = {'isactive':'message'}
+    
+    return render(request, 'web/chat.html', context)
 
 def postContent(request, id):
     print(id)

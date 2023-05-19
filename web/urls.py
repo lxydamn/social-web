@@ -12,5 +12,5 @@ urlpatterns = [
     path("create/post", views.createPost, name='createPost'),
     path("get/page", views.indexGetPage, name="getPage"),
     path("post/<int:id>", views.postContent, name="postContent"),
-    path("message", views.message, name='message')
+    path("message", views.message, name='message'),
 ]
