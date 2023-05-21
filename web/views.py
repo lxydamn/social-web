@@ -32,36 +32,45 @@ def topics(request) :
 
 
 @login_required(login_url='login')
-def chat(request, username):
-    print(username)
-    context = {'isactive':'message'}
-    return render(request, 'web/chat.html', context)
+def chat(request, username) :
 
-
-@login_required(login_url='login')
-def message(request):
+    opponent = User.objects.get(username=username)
+    me = request.user
 
     messages = Message.objects.filter(
-        Q(sender=request.user) | Q(receiver=request.user)
+            (Q(sender=opponent, receiver=me) | Q(sender=me, receiver=opponent))
+    )
+    
+    users = getUsers(me.username)
+
+    context = {'isactive':'message','users': users, 'infos':messages, 'opponent':opponent}
+    
+    return render(request, 'web/message.html', context)
+
+def getUsers(username):
+
+    me = User.objects.get(username=username)
+
+    messages = Message.objects.filter(
+        Q(sender=me) | Q(receiver=me)
     )
 
     users = set()
     
     for message in messages:
-        if message.sender == request.user:
+        if message.sender == me:
             users.add(message.receiver)
         else:
             users.add(message.sender)
-    
-    users = list(users)
 
-    if(len(users) > 0):
-        opponent = users[0]
-        messages = Message.objects.filter(
-            (Q(sender=opponent, receiver=request.user) | Q(sender=request.user, receiver=opponent))
-        )
+    return list(users)
 
-    context = {'users': users,'isactive':'message', 'opponent':opponent, 'infos':messages}
+@login_required(login_url='login')
+def message(request):
+
+    users = getUsers(request.user.username)
+
+    context = {'users': users,'isactive':'message'}
 
     return render(request, 'web/message.html', context)
 
@@ -182,18 +191,7 @@ def createPost(request) :
     context = {'message':message, 'isactive':'createPost'}
 
     return render(request, 'web/create_post.html', context)
-@login_required(login_url='login')
-def chat(request, username) :
 
-    opponent = User.objects.get(username=username)
-    me = request.user
-
-    message = Message.objects.filter(sender=opponent, receiver=me)
-    
-    
-    context = {'isactive':'message'}
-    
-    return render(request, 'web/chat.html', context)
 
 def postContent(request, id):
     print(id)

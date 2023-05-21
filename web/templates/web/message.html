@@ -23,42 +23,55 @@
         </div>
         <div class="col-9" style="padding: 0;">
             <div class="info-box">
-                <div style="overflow-y:auto; height:55vh;">
-                    {% for info in infos %}
-                        {% if info.sender.username == user.username %}
-                            <div class="info-item-right clearfix">
-                                <img src="{{info.sender.avator}}" width="40" style="border-radius: 50%; float: right;" />
-                                <div class="info-item-content-right">
-                                    <div class="right-content-block">
-                                        <p class="text-start">{{info.message}}</p>
+                {% if infos %}
+                    <div style="overflow-y:auto; height:55vh;">
+                        {% for info in infos %}
+                            {% if info.sender.username == user.username %}
+                                <div class="info-item-right clearfix">
+                                    <img src="{{info.sender.avator}}" width="40" style="border-radius: 50%; float: right;" />
+                                    <div class="info-item-content-right">
+                                        <div class="right-content-block">
+                                            <p class="text-start">{{info.message}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% else %}
-                            <div class="info-item-left clearfix">
-                                <img src="{{info.sender.avator}}" width="40" style="border-radius: 50%; float: left;" />
-                                <div class="info-item-content-left">
-                                    <p class="info-item-username">{{info.sender.username}}</p>
-                                    <div class="left-content-block">
-                                        <p class="text-start">{{info.message}}</p>
+                            {% else %}
+                                <div class="info-item-left clearfix">
+                                    <img src="{{info.sender.avator}}" width="40" style="border-radius: 50%; float: left;" />
+                                    <div class="info-item-content-left">
+                                        <p class="info-item-username">{{info.sender.username}}</p>
+                                        <div class="left-content-block">
+                                            <p class="text-start">{{info.message}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="input-box position-relative">
+                        <textarea class="info-content form-control"></textarea>
+                        <button type="button" class="position-absolute bottom-0 end-0 btn btn-primary">发送</button>
+                    </div>
+                {% else %}
+                <div class="no-chat-box"> 
+                    <span>您未选中或发起聊天</span>
                 </div>
-            </div>
-            <div class="input-box position-relative">
-                <textarea class="info-content form-control"></textarea>
-                <button type="button" class="position-absolute bottom-0 end-0 btn btn-primary">发送</button>
-            </div>
+                    
+                {% endif %}
+            </div>       
         </div>
         </div>
     </div>
 </div>
 
 <style>
-      .right-content-block {
+    .no-chat-box {
+        display: flex;
+        height: 80vh;
+        align-items: center;
+        justify-content: center;
+    }
+    .right-content-block {
         margin-right: 10px;
         margin-top: 25px;
         padding: 10px;
