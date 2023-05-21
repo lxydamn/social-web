@@ -32,6 +32,13 @@ def topics(request) :
 
 
 @login_required(login_url='login')
+def chat(request, username):
+    print(username)
+    context = {'isactive':'message'}
+    return render(request, 'web/chat.html', context)
+
+
+@login_required(login_url='login')
 def message(request):
 
     messages = Message.objects.filter(

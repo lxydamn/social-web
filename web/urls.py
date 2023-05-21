@@ -13,4 +13,5 @@ urlpatterns = [
     path("get/page", views.indexGetPage, name="getPage"),
     path("post/<int:id>", views.postContent, name="postContent"),
     path("message", views.message, name='message'),
+    path("chat/<str:username>", views.chat, name='chat')
 ]
