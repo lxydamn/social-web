@@ -13,7 +13,13 @@
                                 <img src="{{user.avator}}" width="55" style="border-radius: 50%; float: left;"/>
                                 <div class="friend-info">
                                     <div class="friend-info-username"><span>{{user.username}}</span></div>
-                                    <div class="friend-info-message"><span>123</span></div>
+                                    <div class="friend-info-message">
+                                        {% if user.is_active == True %}
+                                            <span>在线</span>
+                                        {% else %}
+                                            <span>离线</span>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </a>
                         </div>

@@ -47,6 +47,14 @@ def chat(request, username) :
     
     return render(request, 'web/message.html', context)
 
+def getLastMessage(user1, user2):
+
+    message = Message.objects.get(
+        Q(sender=user1, receiver=user2) & Q(receiver=user1, sender=user2)
+    )
+    return message
+
+
 def getUsers(username):
 
     me = User.objects.get(username=username)
@@ -55,15 +63,17 @@ def getUsers(username):
         Q(sender=me) | Q(receiver=me)
     )
 
+
     users = set()
-    
     for message in messages:
         if message.sender == me:
             users.add(message.receiver)
+            print(message.receiver.is_active)
         else:
             users.add(message.sender)
+            print(message.sender.is_active)
 
-    return list(users)
+    return users
 
 @login_required(login_url='login')
 def message(request):
@@ -87,12 +97,17 @@ def loginPage(request):
         password = request.POST.get('password')
         try :
             user = User.objects.get(username=username)
+            user.is_active = True
+            user.save()
         except:
             messages.error(request, '用户不存在')
+            
         
         user = authenticate(request, username=username, password=password)
-
+        
         if user is not None :
+            
+
             login(request, user)
             return redirect('index')
         else :
@@ -158,7 +173,9 @@ def indexGetPage(request) :
     return render(request, 'web/index.html', context=context)
 
 def logoutUser(request) :
-
+    user = User.objects.get(username=request.user.username)
+    user.is_active = False
+    user.save()
     logout(request)
     return redirect('index')
 
