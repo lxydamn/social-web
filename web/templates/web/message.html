@@ -55,8 +55,8 @@
                         {% endfor %}
                     </div>
                     <div class="input-box position-relative">
-                        <textarea class="info-content form-control"></textarea>
-                        <button type="button" class="position-absolute bottom-0 end-0 btn btn-primary">发送</button>
+                        <textarea id='message-content' class="info-content form-control"></textarea>
+                        <button type="button" onclick="send_message()" class="position-absolute bottom-0 end-0 btn btn-primary">发送</button>
                     </div>
                 {% else %}
                 <div class="no-chat-box"> 
@@ -77,15 +77,21 @@
     var socket = new WebSocket(url)
 
 
-    socket.onopen = (event) => {
-        // console.log("connect")
-        // data = {
-        //     'message':'connect',
-        //     'sender': "{{user.username}}",
-        //     'receiver': "{{opponent.username}}",
-        // }
+    function send_message () {
+        let meesage = document.getElementById('message-content').value
 
-        // socket.send(JSON.stringify(data))
+        if(meesage == null || meesage.length == 0) return
+        console.log(meesage)
+        data = {
+            'message': meesage,
+            'sender':"{{ user.username}}",
+            'receiver': "{{ opponent.username }}"
+        }
+        socket.send(JSON.stringify(data))
+    }
+
+    socket.onopen = (event) => {
+        
     }
 
 

@@ -6,6 +6,7 @@ from channels.exceptions import StopConsumer
 from web.models import User, Message
 
 lock = threading.Lock()
+
 sockets = {}
 
 
@@ -24,6 +25,7 @@ class ChatConsumer(WebsocketConsumer):
             sockets.update({dict_key:self})
         finally:
             lock.release()
+            
         print(sockets.items())
         print('connect', event)
 
@@ -36,9 +38,7 @@ class ChatConsumer(WebsocketConsumer):
         if dict_key in sockets.keys() :
           opponent = sockets.get(dict_key)
           opponent.send(event['text'])
-        else :
-            print("opponent is offline")
-
+            
         sender = User.objects.get(username=data['sender'])
         receiver = User.objects.get(username=data['receiver'])
         message = Message(message=data['message'],sender=sender, receiver=receiver)
