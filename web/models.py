@@ -17,12 +17,12 @@ class Postings(models.Model):
     content = models.TextField(max_length=10000,null=False, blank=False)
     title = models.CharField(max_length=50,null=False, blank=False)
     subtitle = models.CharField(max_length=100,null=False, blank=False)
-    create_time = models.DateTimeField(default = datetime.datetime.now())
+    create_time = models.DateTimeField(default = datetime.datetime.now)
     update_time = models.DateTimeField(auto_now=True)
 
 class Message(models.Model):
     message = models.TextField(max_length=500, blank=True)
-    time = models.DateTimeField(default = datetime.datetime.now())
+    time = models.DateTimeField(default = datetime.datetime.now)
 
     sender = models.ForeignKey("User", on_delete=models.CASCADE, related_name='sender')
     receiver = models.ForeignKey("User", on_delete=models.CASCADE, related_name='receiver')

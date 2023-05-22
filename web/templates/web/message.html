@@ -70,21 +70,22 @@
     </div>
 </div>
 <script>
+    var username = "{{user.username}}"
 
-    let url = "ws:" + window.location.host + window.location.pathname
+    let url = "ws:" + window.location.host + window.location.pathname + "/" + username
 
     var socket = new WebSocket(url)
 
 
-    socket.onopen = () => {
-        console.log("connect")
-        data = {
-            'message':'connect',
-            'sender': "{{user.username}}",
-            'receiver': "opponent",
-        }
+    socket.onopen = (event) => {
+        // console.log("connect")
+        // data = {
+        //     'message':'connect',
+        //     'sender': "{{user.username}}",
+        //     'receiver': "{{opponent.username}}",
+        // }
 
-        socket.send(JSON.stringify(data))
+        // socket.send(JSON.stringify(data))
     }
 
 

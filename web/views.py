@@ -39,7 +39,7 @@ def chat(request, username) :
 
     messages = Message.objects.filter(
             (Q(sender=opponent, receiver=me) | Q(sender=me, receiver=opponent))
-    )
+    ).order_by('time')
     
     users = getUsers(me.username)
 
@@ -68,10 +68,8 @@ def getUsers(username):
     for message in messages:
         if message.sender == me:
             users.add(message.receiver)
-            print(message.receiver.is_active)
         else:
             users.add(message.sender)
-            print(message.sender.is_active)
 
     return users
 
