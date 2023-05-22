@@ -69,7 +69,37 @@
         </div>
     </div>
 </div>
+<script>
 
+    let url = "ws:" + window.location.host + window.location.pathname
+
+    var socket = new WebSocket(url)
+
+
+    socket.onopen = () => {
+        console.log("connect")
+        data = {
+            'message':'connect',
+            'sender': "{{user.username}}",
+            'receiver': "opponent",
+        }
+
+        socket.send(JSON.stringify(data))
+    }
+
+
+    socket.onmessage = (event) => {
+        console.log("message", event)
+
+    }
+
+    window.onbeforeunload = () => {
+        console.log("disconnect")
+        socket.close()
+    }
+
+
+</script>
 <style>
     .no-chat-box {
         display: flex;
