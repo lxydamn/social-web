@@ -39,9 +39,13 @@ def chat(request, username) :
 
     messages = Message.objects.filter(
             (Q(sender=opponent, receiver=me) | Q(sender=me, receiver=opponent))
-    ).order_by('time')
+    ).order_by('-time')[:15]
     
-    users = getUsers(me.username)
+    users = getUsers(me.username, opponent)
+
+    messages = list(messages)
+
+    messages.reverse()
 
     context = {'isactive':'message','users': users, 'infos':messages, 'opponent':opponent}
     
@@ -55,7 +59,7 @@ def getLastMessage(user1, user2):
     return message
 
 
-def getUsers(username):
+def getUsers(username, opponent):
 
     me = User.objects.get(username=username)
 
@@ -63,8 +67,10 @@ def getUsers(username):
         Q(sender=me) | Q(receiver=me)
     )
 
-
     users = set()
+    
+    if opponent != None: 
+        users.add(opponent)
     for message in messages:
         if message.sender == me:
             users.add(message.receiver)
@@ -76,9 +82,9 @@ def getUsers(username):
 @login_required(login_url='login')
 def message(request):
 
-    users = getUsers(request.user.username)
+    users = getUsers(request.user.username, None)
 
-    context = {'users': users,'isactive':'message'}
+    context = {'users': users, 'isactive':'message', 'infos':'inmessage'}
 
     return render(request, 'web/message.html', context)
 

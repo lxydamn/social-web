@@ -29,8 +29,12 @@
         </div>
         <div class="col-9" style="padding: 0;">
             <div class="info-box">
-                {% if infos %}
-                    <div style="overflow-y:auto; height:55vh;">
+                {% if infos == 'inmessage' %}
+                <div class="no-chat-box"> 
+                    <span>您未选中或发起聊天</span>
+                </div>
+                {% else %}
+                    <div id="info-box-content" style="overflow-y:auto; height:55vh;">
                         {% for info in infos %}
                             {% if info.sender.username == user.username %}
                                 <div class="info-item-right clearfix">
@@ -58,11 +62,6 @@
                         <textarea id='message-content' class="info-content form-control"></textarea>
                         <button type="button" onclick="send_message()" class="position-absolute bottom-0 end-0 btn btn-primary">发送</button>
                     </div>
-                {% else %}
-                <div class="no-chat-box"> 
-                    <span>您未选中或发起聊天</span>
-                </div>
-                    
                 {% endif %}
             </div>       
         </div>
@@ -78,16 +77,52 @@
 
 
     function send_message () {
-        let meesage = document.getElementById('message-content').value
+        let message = document.getElementById('message-content').value
 
-        if(meesage == null || meesage.length == 0) return
-        console.log(meesage)
+        if(message == null || message.length == 0) return
+
         data = {
-            'message': meesage,
+            'message': message,
             'sender':"{{ user.username}}",
             'receiver': "{{ opponent.username }}"
         }
+
         socket.send(JSON.stringify(data))
+ 
+        new_message(message, 'right')
+    }
+
+    function new_message(message, sender) {
+        
+        document.getElementById('message-content').value=""
+
+        var box = document.getElementById('info-box-content')
+
+        if ( sender === 'right' ) {
+            var right_div = `<div class="info-item-right clearfix">
+                                    <img src=${ "{{user.avator}}" } width="40" style="border-radius: 50%; float: right;" />
+                                    <div class="info-item-content-right">
+                                        <div class="right-content-block">
+                                            <p class="text-start">${ message }</p>
+                                        </div>
+                                    </div>
+                                </div>`
+            box.innerHTML += right_div
+        } else {
+            var left_div =  `<div class="info-item-left clearfix">
+                                    <img src=${ "{{opponent.avator}}" } width="40" style="border-radius: 50%; float: left;" />
+                                    <div class="info-item-content-left">
+                                        <p class="info-item-username">${"{{opponent.username}}"}</p>
+                                        <div class="left-content-block">
+                                            <p class="text-start">${message}</p>
+                                        </div>
+                                    </div>
+                                </div>`
+            box.innerHTML += left_div
+        }
+
+        box.scrollTop = box.scrollHeight // 滚轮到
+        
     }
 
     socket.onopen = (event) => {
@@ -96,8 +131,10 @@
 
 
     socket.onmessage = (event) => {
-        console.log("message", event)
-
+        data = JSON.parse(event['data'])
+        console.log(data)
+        
+        new_message(data['message'], 'left')
     }
 
     window.onbeforeunload = () => {

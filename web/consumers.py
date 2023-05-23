@@ -25,9 +25,6 @@ class ChatConsumer(WebsocketConsumer):
             sockets.update({dict_key:self})
         finally:
             lock.release()
-            
-        print(sockets.items())
-        print('connect', event)
 
     def websocket_receive(self, event):
         
@@ -44,7 +41,6 @@ class ChatConsumer(WebsocketConsumer):
         message = Message(message=data['message'],sender=sender, receiver=receiver)
         message.save()
 
-        print("on_message", event)
 
 
     def websocket_disconnect(self, event):
@@ -59,6 +55,4 @@ class ChatConsumer(WebsocketConsumer):
       finally:
           lock.release()
 
-      print("disconnect", event)
-      print(sockets.items())
       raise StopConsumer()
