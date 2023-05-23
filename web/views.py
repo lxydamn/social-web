@@ -18,7 +18,24 @@ def index(request):
 
     paginator = Paginator(posts, 3)
 
-    context = {'user':request.user, 'isactive':isactive, 'posts':paginator.get_page(1), 'page':1}
+    page = 1
+
+    if request.method == 'POST':
+
+        page = int(request.POST.get('page'))
+        
+        next_page = int(request.POST.get('next'))
+
+        if next_page == -1 and paginator.get_page(page).has_previous() :
+            page = page + next_page
+        elif next_page == 1 and paginator.get_page(page).has_next() :
+            page = page + next_page
+
+        else:
+            messages.error(request, '不能再往前辣~')
+        
+
+    context = {'user':request.user, 'isactive':isactive, 'posts':paginator.get_page(page), 'page':page, 'page_count':paginator.num_pages}
 
     return render(request, 'web/index.html', context=context)
 
@@ -147,35 +164,6 @@ def updateUser(request):
 
     return render(request, 'web/update_user.html', context) 
 
-# 完成分页
-@login_required(login_url= '/login')
-def indexGetPage(request) :
-    username = request.user.username
-
-    pages = Postings.objects.filter(username=username).order_by('create_time')
-
-    paginator = Paginator(pages, 3)
-    page = ''
-
-    if request.method == 'POST':
-
-        page = int(request.POST.get('page'))
-        
-        next_page = int(request.POST.get('next'))
-
-        if next_page == -1 and paginator.get_page(page).has_previous() :
-            page = page + next_page
-        elif next_page == 1 and paginator.get_page(page).has_next() :
-            page = page + next_page
-
-        else:
-            messages.error(request, '不能再往前辣~')
-    
-    print(paginator.get_page(page).object_list, page)
-    context = {'user':request.user, 'isactive':'index', 'posts':paginator.get_page(page).object_list, 'page': page}
-
-    return render(request, 'web/index.html', context=context)
-
 def logoutUser(request) :
     user = User.objects.get(username=request.user.username)
     user.is_active = False
@@ -215,9 +203,7 @@ def createPost(request) :
 
 
 def postContent(request, id):
-    print(id)
     post = Postings.objects.get(id=id)
-    print(post)
     return render(request, 'web/post_content.html', {'post':post})
 
 def registerPage(request):
@@ -257,3 +243,10 @@ def registerPage(request):
 
     return render(request, 'web/signup.html', {'message':message})
 
+@login_required(login_url='login')
+def search(request):
+
+    posts = Postings.objects.all()[:20]
+
+    context = {'isactive':'search', 'posts': posts}
+    return render(request, 'web/search.html', context)

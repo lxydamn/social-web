@@ -15,88 +15,86 @@
         </div>
       </div>
     </div>
+    {% if posts %}
+    <div class="page-list">
+      {% for post in posts %}
+      
+      {% if forloop.counter|divisibleby:2 %}
+      <div class="page-item"> 
+        <div class="row">
+          <div class="col-6">
+            <div class="page-item-img">
+              <img src="{% static 'images/p-0.png' %}" alt="images" width="400"  style="border-radius: 10px;"/>
+            </div>
+          </div>
 
-          
-      <div class="page-list">
-        {% for post in posts %}
-        
-        {% if forloop.counter|divisibleby:2 %}
-        <div class="page-item"> 
-          <div class="row">
-            <div class="col-6">
-              <div class="page-item-img">
-                <img src="{% static 'images/p-0.png' %}" alt="images" width="400"  style="border-radius: 10px;"/>
-              </div>
-            </div>
-  
-            <div class="col-6">
-              <div class="page-item-info">
-                <p>{{ post.create_time|date:"Y-m-d" }}</p>
-                <a href="{% url 'postContent' post.id %}">
-                  <h3>{{ post.title }}</h3>
-                  <h4>{{ post.subtitle }}</h4>
-                </a>
-                <hr>
-              </div>
+          <div class="col-6">
+            <div class="page-item-info">
+              <p>{{ post.create_time|date:"Y-m-d" }}</p>
+              <a href="{% url 'postContent' post.id %}">
+                <h3>{{ post.title }}</h3>
+                <h4>{{ post.subtitle }}</h4>
+              </a>
+              <hr>
             </div>
           </div>
         </div>
-        {% else %}
-        <div class="page-item"> 
-          <div class="row">
-            <div class="col-6">
-              <div class="page-item-info">
-                <p>{{ post.create_time|date:"Y-m-d" }}</p>
-                <a href="{% url 'postContent' post.id %}">
-                  <h3>{{ post.title }}</h3>
-                  <h4>{{ post.subtitle }}</h4>
-                </a>
-                <hr>
-              </div>
+      </div>
+      {% else %}
+      <div class="page-item"> 
+        <div class="row">
+          <div class="col-6">
+            <div class="page-item-info">
+              <p>{{ post.create_time|date:"Y-m-d" }}</p>
+              <a href="{% url 'postContent' post.id %}">
+                <h3>{{ post.title }}</h3>
+                <h4>{{ post.subtitle }}</h4>
+              </a>
+              <hr>
             </div>
-            <div class="col-6">
-              <div class="page-item-img">
-                <img src="{% static 'images/p-1.png' %}" alt="images" width="400"  style="border-radius: 10px;"/>
-              </div>
+          </div>
+          <div class="col-6">
+            <div class="page-item-img">
+              <img src="{% static 'images/p-1.png' %}" alt="images" width="400"  style="border-radius: 10px;"/>
             </div>
           </div>
         </div>
-          {% endif %}
-        
-          {% endfor %}
-          
-            <div class="row text-center">
-              <div class="col-6">
-                <form id="pre_page" action="{% url 'getPage' %}" method="POST">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-primary">
-                    <input type="text" name="next" value="-1" style="display:none">
-                    <input type="text" name="page" value="{{page}}" style="display:none">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-left" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223z"/>
-                    </svg>
-                    前一页
-                  </button> 
-                </form>
-              </div>
-              
-              <div class="col-6">
-                <form id="next_page" action="{% url 'getPage' %}" method="POST">
-                  {% csrf_token %}
-                  <input type="text" name="next" value="1" style="display:none">
-                  <input type="text" name="page" value= "{{ page }}" style="display:none">
-                  <button type="submit" class="btn btn-primary">
-                  后一页
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+      </div>
+      {% endif %}
+
+      {% endfor %}
+        {% if page != 1 %}
+              <form id="pre_page" action="{% url 'index' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">
+                  <input type="text" name="next" value="-1" style="display:none">
+                  <input type="text" name="page" value="{{page}}" style="display:none">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223z"/>
                   </svg>
-                </button>  
-                </form>
-              </div>
-            </div>
-        </div>
-    </div>
-  </div>  
+                  前一页
+                </button> 
+              </form>
+        {% endif %}
+        {% if page != page_count %}
+              <form id="next_page" action="{% url 'index' %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="next" value="1" style="display:none">
+                <input type="text" name="page" value= "{{ page }}" style="display:none">
+                <button type="submit" class="btn btn-primary">
+                后一页
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+              </button>  
+              </form>
+          {% endif %}
+      </div>
+  </div>
+</div>  
+
+    {% endif %} 
+     
 <script>
 
 
@@ -163,8 +161,6 @@
     box-shadow: inset 0 0 20px #000;
     transition: all 1s ease;
   }
-
- 
 
   .info-username {
     margin-top: 30px;

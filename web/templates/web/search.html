@@ -1,0 +1,74 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="container text-center" style="padding: 10px;">
+    <div class="search-wrap">
+        <form class="search-box d-flex" role="search">
+            <input class="search-content form-control me-2" type="search" placeholder="输入你想要查找的内容吧">
+            <button class="search-btn btn bg-primary" style="width: 10vh; color: #ffff;" type="submit">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+            </button>
+          </form>
+    </div>
+
+    <div class="result-box">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link" href="#">主题</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">用户</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">资源</a>
+            </li>
+          </ul>
+          <div class="result-content">
+            <div class="post-list">
+                {% for post in posts %}
+                    
+                    <div class="post-item text-start">
+                        <div class="row">
+                            <div class="col-3">
+                                <img
+                                    src="https://api.likepoems.com/img/pc?id={{post.id}}"
+                                    width="250"
+                                    style="border-radius: 10px;"
+                                />
+                            </div>
+                            <div class="col-9">
+                                <div class="post-item-infos">
+                                    <h2>{{post.title}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+          </div>
+    </div>
+    
+  </div>
+
+<style>
+    .search-box {
+        height: 7vh;
+    }
+    .search-warp {
+        position: sticky;
+    }
+    .result-box {
+        margin-top: 10px;
+        background-color: aliceblue;
+    }
+    .post-item {
+        padding: 10px;
+    }
+
+</style>
+
+{% endblock %}
