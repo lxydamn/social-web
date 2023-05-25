@@ -248,12 +248,23 @@ def registerPage(request):
 @login_required(login_url='login')
 def search(request, tabs):
     
-    
-    if tabs == 'topics':
-        posts = Postings.objects.all()[:20]
-        context = {'isactive':'search', 'posts': posts, 'tabs':'topics'}
-    else :
-        users = User.objects.exclude(username=request.user.username).all()[:20]
-        context = {'isactive':'search', 'users': users, 'tabs':'users'}
+    if request.method == 'POST':
+        
+        query = request.POST.get('query_value')
+        if tabs == 'topics':
+            posts = Postings.objects.filter(
+                Q(title__contains=query) | Q(subtitle__contains=query)
+            )[:20]
+            context = {'isactive':'search', 'posts': posts, 'tabs':'topics'}
+        else :
+            users = User.objects.exclude(username=request.user.username).filter(username__contains=query)[:20]
+            context = {'isactive':'search', 'users': users, 'tabs':'users'}
+    else:
+        if tabs == 'topics':
+            posts = Postings.objects.all()[:20]
+            context = {'isactive':'search', 'posts': posts, 'tabs':'topics'}
+        else :
+            users = User.objects.exclude(username=request.user.username).all()[:20]
+            context = {'isactive':'search', 'users': users, 'tabs':'users'}
         
     return render(request, 'web/search.html', context)
