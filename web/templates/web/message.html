@@ -10,7 +10,7 @@
                     {% for user in users %}
                         <div class="friend-item">
                             <a href="{% url 'chat' user.username %}" class="list-group-item list-group-item-action">
-                                <img src="{{user.avator}}" width="55" style="border-radius: 50%; float: left;"/>
+                                <img alt="头像" src="{% static user.avator %}" width="55" style="border-radius: 50%; float: left;"/>
                                 <div class="friend-info">
                                     <div class="friend-info-username"><span>{{user.username}}</span></div>
                                     <div class="friend-info-message">
@@ -38,7 +38,7 @@
                         {% for info in infos %}
                             {% if info.sender.username == user.username %}
                                 <div class="info-item-right clearfix">
-                                    <img src="{{info.sender.avator}}" width="40" style="border-radius: 50%; float: right;" />
+                                    <img  alt="头像" src="{% static info.sender.avator %}" width="40" style="border-radius: 50%; float: right;" />
                                     <div class="info-item-content-right">
                                         <div class="right-content-block">
                                             <p class="text-start">{{info.message}}</p>
@@ -47,7 +47,7 @@
                                 </div>
                             {% else %}
                                 <div class="info-item-left clearfix">
-                                    <img src="{{info.sender.avator}}" width="40" style="border-radius: 50%; float: left;" />
+                                    <img alt="头像" src="{% static info.sender.avator %}" width="40" style="border-radius: 50%; float: left;" />
                                     <div class="info-item-content-left">
                                         <p class="info-item-username">{{info.sender.username}}</p>
                                         <div class="left-content-block">
@@ -100,7 +100,7 @@
 
         if ( sender === 'right' ) {
             var right_div = `<div class="info-item-right clearfix">
-                                    <img src=${ "{{user.avator}}" } width="40" style="border-radius: 50%; float: right;" />
+                                    <img  alt="头像" src=${ "{% static user.avator %}" } width="40" style="border-radius: 50%; float: right;" />
                                     <div class="info-item-content-right">
                                         <div class="right-content-block">
                                             <p class="text-start">${ message }</p>
@@ -110,7 +110,7 @@
             box.innerHTML += right_div
         } else {
             var left_div =  `<div class="info-item-left clearfix">
-                                    <img src=${ "{{opponent.avator}}" } width="40" style="border-radius: 50%; float: left;" />
+                                    <img  alt="头像" src=${ "{% static opponent.avator %}" } width="40" style="border-radius: 50%; float: left;" />
                                     <div class="info-item-content-left">
                                         <p class="info-item-username">${"{{opponent.username}}"}</p>
                                         <div class="left-content-block">

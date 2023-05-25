@@ -125,12 +125,10 @@ SECURE_CONTENT_TYPE_NOSNIFF = False
 
 STATIC_URL = '/static/'
 STATIC_ROOT=os.path.join(BASE_DIR,"static")#正确
-MEDIA_URL = '/images/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '/static/'), ##修改地方
-]
 
-MEDIA_ROOT = BASE_DIR / 'static/images'
+STATICFILES_DIRS = [
+  os.path.join(BASE_DIR, 'static\\avator'), ##修改地方
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

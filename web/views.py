@@ -224,14 +224,16 @@ def registerPage(request):
             message = '两次密码不一致'
         else :
             user = User.objects.create(username=username)
-
+            user.avator = 'avator/' + str(user.id) + '.png'
             user.set_password(password1)
 
             user.save()
 
+
             lxy = User.objects.get(username='lxy')
 
             message = Message(message='欢迎来到lxyの网站，现在你可与lxy聊天辣~', sender=lxy, receiver=user)
+
             message.save()
 
             authenticate_user = authenticate(username=username, password=password1)

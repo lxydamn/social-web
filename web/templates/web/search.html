@@ -41,7 +41,11 @@
                             </div>
                             <div class="col-9">
                                 <div class="post-item-infos">
-                                    <h2>{{post.title}}</h2>
+                                    <p>{{ post.create_time|date:"Y-m-d" }}</p>
+                                    <a href="{% url 'postContent' post.id %}">
+                                        <h3>{{ post.title }}</h3>
+                                        <h4>{{ post.subtitle }}</h4>
+                                    </a>
                                 </div>
                             </div>
                         </div>

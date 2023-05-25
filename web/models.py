@@ -5,7 +5,7 @@ from django.db import models
 class User(AbstractUser):
     username = models.CharField(max_length=100, null=True, unique=True)
     bio = models.TextField(null=True, default="这个人很懒~ 什么也没留下")
-    avator = models.ImageField(null=True, default="https://img1.imgtp.com/2023/05/07/8NKt5JEn.png")
+    avator = models.CharField(max_length=1000,null=True, default="https://img1.imgtp.com/2023/05/07/8NKt5JEn.png")
     email = models.EmailField(unique=True ,null =True)
     
     USERNAME_FIELD='username'
