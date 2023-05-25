@@ -1,5 +1,5 @@
 {% extends 'main.html' %}
-
+{% load static %}
 {% block content %}
 
 <div class="container text-center" style="padding: 10px;">
@@ -11,49 +11,86 @@
                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                 </svg>
             </button>
-          </form>
+        </form>
     </div>
 
     <div class="result-box">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link" href="#">主题</a>
+              <a class="nav-link 
+                {% if tabs == 'topics' %}active{% endif %}" 
+                href="{% url 'search' 'topics' %}">主题</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">用户</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">资源</a>
+              <a class="nav-link
+              {% if tabs == 'users' %}active{% endif %}" 
+              href="{% url 'search' 'users' %}">用户</a>
             </li>
           </ul>
           <div class="result-content">
-            <div class="post-list">
-                {% for post in posts %}
-                    
-                    <div class="post-item text-start">
-                        <div class="row">
-                            <div class="col-3">
-                                <img
-                                    src="https://api.likepoems.com/img/pc?id={{post.id}}"
-                                    width="250"
-                                    style="border-radius: 10px;"
-                                />
-                            </div>
-                            <div class="col-9">
-                                <div class="post-item-infos">
-                                    <p>{{ post.create_time|date:"Y-m-d" }}</p>
-                                    <a href="{% url 'postContent' post.id %}">
-                                        <h3>{{ post.title }}</h3>
-                                        <h4>{{ post.subtitle }}</h4>
-                                    </a>
+            {% if posts %}
+                <div class="post-list">
+                    {% for post in posts %}
+                        <div class="post-item text-start">
+                            <div class="row">
+                                <div class="col-3">
+                                    <img
+                                        src="https://api.likepoems.com/img/pc?id={{post.id}}"
+                                        width="300"
+                                        style="border-radius: 10px;"
+                                    />
+                                </div>
+                                <div class="col-9">
+                                    <div class="page-item-info">
+                                        <p>{{ post.create_time|date:"Y-m-d" }}</p>
+                                        <a href="{% url 'postContent' post.id %}">
+                                            <h4 class="text-truncate" style="max-width: 200px;">{{ post.title }}</h4>
+                                            <h5 class="text-truncate" style="max-width: 300px;">{{ post.subtitle }}</h5>
+                                        </a>
+                                        <hr />
+                                        <p>作者：{{ post.username }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-            </div>
+                        <hr />
+                    {% endfor %}
+                </div>
+
+            {% endif %}
+           
+            {% if users %}
+                <div class="user-list">
+                    {% for user in users %}
+                        <div class="user-item text-start">
+                            <div class="row">
+                                <div class="col-1">
+                                    <img
+                                        src="{% static user.avator %}"
+                                        width="80px"
+                                        style="border-radius: 50%;"
+                                    />
+                                </div>
+                                <div class="col-10">
+                                    <div class="user-item-info">
+                                        <h5>{{user.username}}</h5>
+                                        <p class="text-truncate" style="max-width: 400px;">{{user.bio}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    <a href="{% url 'chat' user.username %}" type="button" class="btn btn-primary" >私聊</a>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
 
           </div>
+          
     </div>
     
   </div>
@@ -71,8 +108,24 @@
     }
     .post-item {
         padding: 10px;
+        margin: 10px;
     }
-
+    .page-item-info>a {
+        text-decoration: none;
+    }
+    .page-item-info>a:hover h4{
+        color: #78C2AD;
+    }
+    .page-item-info>a:hover h5{
+        color: #78C2AD;
+    }
+    .user-item {
+        margin: 10px;
+        padding: 10px;
+    }
+    .user-item-info {
+        padding: 10px;
+    }
 </style>
 
 {% endblock %}

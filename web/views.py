@@ -224,7 +224,7 @@ def registerPage(request):
             message = '两次密码不一致'
         else :
             user = User.objects.create(username=username)
-            user.avator = 'avator/' + str(user.id) + '.png'
+            user.avator = 'avator/' + str(user.id % 100 + 1) + '.png'
             user.set_password(password1)
 
             user.save()
@@ -246,9 +246,14 @@ def registerPage(request):
     return render(request, 'web/signup.html', {'message':message})
 
 @login_required(login_url='login')
-def search(request):
-
-    posts = Postings.objects.all()[:20]
-
-    context = {'isactive':'search', 'posts': posts}
+def search(request, tabs):
+    
+    
+    if tabs == 'topics':
+        posts = Postings.objects.all()[:20]
+        context = {'isactive':'search', 'posts': posts, 'tabs':'topics'}
+    else :
+        users = User.objects.exclude(username=request.user.username).all()[:20]
+        context = {'isactive':'search', 'users': users, 'tabs':'users'}
+        
     return render(request, 'web/search.html', context)

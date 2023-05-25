@@ -9,7 +9,10 @@
                 <div style="overflow-y:auto; overflow-x:auto; height:80vh;">
                     {% for user in users %}
                         <div class="friend-item">
-                            <a href="{% url 'chat' user.username %}" class="list-group-item list-group-item-action">
+                            <a href="{% url 'chat' user.username %}" 
+                            class="list-group-item list-group-item-action 
+                                {% if opponent == user %} active {% endif %}
+                            ">
                                 <img alt="头像" src="{% static user.avator %}" width="55" style="border-radius: 50%; float: left;"/>
                                 <div class="friend-info">
                                     <div class="friend-info-username"><span>{{user.username}}</span></div>
