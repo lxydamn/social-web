@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 {% load static %}
+{% load get_mod %}
 {% block content %}
 
 <div class="container text-center" style="padding: 10px;">
@@ -36,7 +37,7 @@
                             <div class="row">
                                 <div class="col-3">
                                     <img
-                                        src="https://api.likepoems.com/img/pc?id={{post.id}}"
+                                        src="{% static 'images' %}/{{ post.id|get_mod:100  }}.png" 
                                         width="300"
                                         style="border-radius: 10px;"
                                     />

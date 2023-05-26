@@ -1,5 +1,6 @@
 {% extends 'main.html' %} 
 {% load static %}
+{% load get_mod %}
 {% block content %}
 
   <div class="blog">
@@ -24,7 +25,7 @@
         <div class="row">
           <div class="col-6">
             <div class="page-item-img">
-              <img src="{% static 'images/p-0.png' %}" alt="images" width="400"  style="border-radius: 10px;"/>
+              <img src="{% static 'images' %}/{{ post.id|get_mod:100  }}.png"  alt="images" width="400"  style="border-radius: 10px;"/>
             </div>
           </div>
 
@@ -55,7 +56,7 @@
           </div>
           <div class="col-6">
             <div class="page-item-img">
-              <img src="{% static 'images/p-1.png' %}" alt="images" width="400"  style="border-radius: 10px;"/>
+              <img src="{% static 'images' %}/{{ post.id|get_mod:100  }}.png"  alt="images" width="400"  style="border-radius: 10px;"/>
             </div>
           </div>
         </div>

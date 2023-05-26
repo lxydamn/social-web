@@ -1,4 +1,4 @@
-{% extends 'main.html' %} {% load static %} {% block content %}
+{% extends 'main.html' %} {% load static %}  {% load get_mod %} {% block content %}
 <div class="page-list">
   {% for post in posts %} {% if forloop.counter|divisibleby:2 %}
   <div class="page-item">
@@ -6,7 +6,7 @@
       <div class="col-6">
         <div class="page-item-img">
           <img
-            src="https://api.likepoems.com/img/pc?id={{post.id}}"
+            src="{% static 'images' %}/{{ post.id|get_mod:100  }}.png" 
             alt="images"
             width="400"
             style="border-radius: 10px"
@@ -48,7 +48,7 @@
       <div class="col-6">
         <div class="page-item-img">
           <img
-            src="https://api.likepoems.com/img/pc?id={{post.id}}"
+            src="{% static 'images' %}/{{ post.id|get_mod:100  }}.png" 
             alt="images"
             width="400"
             style="border-radius: 10px"
