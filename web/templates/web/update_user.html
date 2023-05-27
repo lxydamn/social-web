@@ -24,21 +24,18 @@
           placeholder="用户的邮箱"
           name="email"
           value="{{user.email}}"
-          aria-label="Recipient's username"
-          aria-describedby="basic-addon2"
         />
       </div>
 
       <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon3">https://xxxxx</span>
+        <span class="input-group-text" id="basic-addon3">用户id自动生成</span>
         <input
           type="text"
           placeholder="用户的头像链接"
           name="avator"
           value="{{ user.avator }}"
           class="form-control"
-          id="basic-url"
-          aria-describedby="basic-addon3"
+          disabled
         />
       </div>
 
@@ -81,12 +78,19 @@
 
 </script>
 <style>
+  .input-group span {
+    width: 160px;
+  }
   .update-container {
-    height: 100vh;
+    height: 70vh;
+    display: flex;
+    align-items: center;
   }
   .update-form {
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 30px;
     width: 50%;
-    margin-top: 50px;
   }
 </style>
 {% endblock %}

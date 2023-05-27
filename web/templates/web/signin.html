@@ -2,9 +2,8 @@
 
 {% block content %}
 
-
-  <div class="container" style=" width: 400px;">
-    <form class="row g-3" style="margin-top: 12%;" action="{% url 'login' %}" method="POST">
+  <div class="sign-card container">
+    <form class="sign-form row g-3" action="{% url 'login' %}" method="POST">
         {% csrf_token %}
         <div class="form-floating mb-3">
             <input type="text" name="username" class="form-control" id="floatingInput" placeholder="username">
@@ -16,9 +15,26 @@
         </div>
         <a href="{% url 'register' %}">没有账号? 点击跳转注册</a>
         <div class="text-center">
+          <div class="message-box">{{message}}</div>
             <button type="submit" class="btn btn-secondary btn-lg" style="width:150px; text-align: center;">登录</button>
         </div>
     </form>
   </div>
 
+  <style>
+    .sign-form {
+      height: 45vh;
+      width: 25vw;
+      padding: 20px;
+      background-color: aliceblue;
+      border-radius: 10px;
+    }
+    .sign-card {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 70vh;
+    }
+
+  </style>
 {% endblock %}

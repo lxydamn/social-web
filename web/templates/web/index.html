@@ -9,7 +9,6 @@
         <div class="avator-box">
           <img id="info-avator" src="{% static user.avator %}" alt="头像" width="100px" />
         </div>
-        
         <div class="info-text">
           <div class="info-username">{{ user.username }}</div>
           <div class="info-bio">{{user.bio}}</div>
@@ -94,9 +93,10 @@
   </div>
 </div>  
 
-    {% endif %} 
+{% endif %} 
      
 <style>
+
    #info-avator:hover {
     transform: rotate(360deg);
   }
@@ -112,9 +112,7 @@
   }
   .blog {
     width: 100%;
-    background: url("{% static '/images/p-1.png' %}") no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+
   }
   .page-item-img {
     margin: 0 auto;
@@ -149,6 +147,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background: url("{% static '/images/p-0.png' %}") no-repeat;
+    background-size: cover;
   }
   
   #info-avator {

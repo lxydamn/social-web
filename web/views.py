@@ -9,7 +9,7 @@ from .models import User, Postings, Message
 from django.db.models import Q
 # 若没有登录直接路由到讨论广场
 
-@login_required(login_url= '/topics')
+@login_required(login_url= 'login')
 def index(request):
 
     isactive = 'index'
@@ -109,7 +109,7 @@ def message(request):
 def loginPage(request):
 
     page = 'login'
-
+    message = ''
     if request.user.is_authenticated :
         return redirect('index')
     
@@ -121,20 +121,18 @@ def loginPage(request):
             user.is_active = True
             user.save()
         except:
-            messages.error(request, '用户不存在')
+            message = '用户不存在'
             
         
         user = authenticate(request, username=username, password=password)
         
         if user is not None :
-            
-
             login(request, user)
             return redirect('index')
         else :
-            messages.error(request,'用户邮箱或密码错误')
+            message = '用户名或密码错误'
 
-    context = {'page': page}
+    context = {'page': page, 'message': message }
     return render(request, 'web/signin.html', context)
 
 @login_required(login_url='login')
