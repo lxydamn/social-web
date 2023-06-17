@@ -1,89 +1,21 @@
-{% extends 'main.html' %} {% load static %}  {% load get_mod %} {% block content %}
+{% extends 'main.html' %} {% load static %} {% load get_mod %} {% block content%}
 <div class="page-list">
-  {% for post in posts %} {% if forloop.counter|divisibleby:2 %}
-  <div class="page-item">
-    <div class="row">
-      <div class="col-6">
-        <div class="page-item-img">
-          <img
-            src="{% static 'images' %}/{{ post.id|get_mod:100  }}.png" 
-            alt="images"
-            width="400"
-            style="border-radius: 10px"
-          />
-        </div>
-      </div>
-
-      <div class="col-6">
-        <div class="page-item-info">
-          
-          <a href="{% url 'postContent' post.id %}">
-            <h3>{{ post.title }}</h3>
-            <h4>{{ post.subtitle }}</h4>
-          </a>
-          <hr />
-          <p>{{ post.create_time|date:"Y-m-d" }}</p>
-
-          <p>{{ post.username }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  {% else %}
-  <div class="page-item">
-    <div class="row">
-      <div class="col-6">
-        <div class="page-item-info">
-          <a href="{% url 'postContent' post.id %}">
-            <h3>{{ post.title }}</h3>
-            <h4>{{ post.subtitle }}</h4>
-          </a>
-          <hr />
-
-          <p>{{ post.create_time|date:"Y-m-d" }}</p>
-          <p>{{ post.username}}</p>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="page-item-img">
-          <img
-            src="{% static 'images' %}/{{ post.id|get_mod:100  }}.png" 
-            alt="images"
-            width="400"
-            style="border-radius: 10px"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  {% endif %} {% endfor %}
-
-  <style>
-    .page-item-img {
-      margin: 0 auto;
-    }
-    .page-item-info {
-      margin: 20px 20px auto;
-      border-radius: 10px;
-    }
-    .page-item {
-      margin: 40px auto;
-      margin-top: 30px;
-      max-width: 800px;
-    }
-    .page-list {
-      padding-top: 40px;
-      padding-bottom: 50px;
-    }
-    .page-item-info > a {
-      text-decoration: none;
-    }
-    .page-item-info > a:hover h3 {
-      color: #78c2ad;
-    }
-    .page-item-info > a:hover h4 {
-      color: #78c2ad;
-    }
-  </style>
-  {% endblock %}
+	{% for post in posts %}
+	<div class="page-item">
+		<div class="page-item-img">
+			<img src="{% static 'images' %}/{{ post.id|get_mod:100  }}.png" />
+		</div>
+		<div class="page-item-info">
+			<p>{{ post.create_time|date:"Y-m-d" }}</p>
+			<a href="{% url 'postContent' post.id %}">
+				<h3>{{ post.title }}</h3>
+				<h4>{{ post.subtitle }}</h4>
+			</a>
+			<div class="page-item-author">
+				<p>{{ post.username }}</p>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+	{% endblock %}
 </div>

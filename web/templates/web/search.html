@@ -38,12 +38,10 @@
                                 <div class="col-3">
                                     <img
                                         src="{% static 'images' %}/{{ post.id|get_mod:100  }}.png" 
-                                        width="300"
-                                        style="border-radius: 10px;"
                                     />
                                 </div>
                                 <div class="col-9">
-                                    <div class="page-item-info">
+                                    <div class="post-item-info">
                                         <p>{{ post.create_time|date:"Y-m-d" }}</p>
                                         <a href="{% url 'postContent' post.id %}">
                                             <h4 class="text-truncate" style="max-width: 200px;">{{ post.title }}</h4>
@@ -73,21 +71,19 @@
                                 <div class="col-1">
                                     <img
                                         src="{% static user.avator %}"
-                                        width="80px"
-                                        style="border-radius: 50%;"
                                     />
                                 </div>
-                                <div class="col-10">
+                                <div class="col-9">
                                     <div class="user-item-info">
                                         <h5>{{user.username}}</h5>
                                         <p class="text-truncate" style="max-width: 400px;">{{user.bio}}</p>
                                     </div>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-2">
                                     <a href="{% url 'chat' user.username %}" type="button" class="btn btn-primary" >私聊</a>
                                 </div>
                             </div>
-                            
+                            <hr>
                         </div>
 
                     {% endfor %}
@@ -104,39 +100,5 @@
     </div>
     
   </div>
-
-<style>
-    .search-box {
-        height: 7vh;
-    }
-    .search-warp {
-        position: sticky;
-    }
-    .result-box {
-        margin-top: 10px;
-        background-color: aliceblue;
-        min-height: 300px;
-    }
-    .post-item {
-        padding: 10px;
-        margin: 10px;
-    }
-    .page-item-info>a {
-        text-decoration: none;
-    }
-    .page-item-info>a:hover h4{
-        color: #78C2AD;
-    }
-    .page-item-info>a:hover h5{
-        color: #78C2AD;
-    }
-    .user-item {
-        margin: 10px;
-        padding: 10px;
-    }
-    .user-item-info {
-        padding: 10px;
-    }
-</style>
 
 {% endblock %}

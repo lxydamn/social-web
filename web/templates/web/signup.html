@@ -20,24 +20,8 @@
         <a href="{% url 'login' %}">已有账号？点击跳转登录</a>
         <div class="text-center">
             <div class="message-box">{{message}}</div>
-            <button type="submit" class="btn btn-secondary btn-lg" style="width:150px; text-align: center;">注册</button>
+            <button type="submit" class="btn btn-secondary btn-lg">注册</button>
         </div>
     </form>
   </div>
-
-  <style>
-    .sign-form {
-      height: 60vh;
-      width: 25vw;
-      padding: 20px;
-      background-color: aliceblue;
-      border-radius: 10px;
-    }
-    .sign-card {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 70vh;
-    }
-  </style>
 {% endblock %}

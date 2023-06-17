@@ -144,12 +144,9 @@ def updateUser(request):
         username = request.POST.get('username')
         email = request.POST.get('email')
         bio = request.POST.get('bio')
-        avator = request.POST.get('avator')
 
         try :
             user = User.objects.get(username=username)
-        
-            user.avator = avator
             user.bio = bio
             user.email = email
             
@@ -224,7 +221,7 @@ def registerPage(request):
             user = User.objects.create(username=username)
             user.avator = 'avator/' + str(user.id % 100 + 1) + '.png'
             user.set_password(password1)
-
+            user.email = username + "@xxx.com"
             user.save()
 
 

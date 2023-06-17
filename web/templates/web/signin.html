@@ -16,25 +16,9 @@
         <a href="{% url 'register' %}">没有账号? 点击跳转注册</a>
         <div class="text-center">
           <div class="message-box">{{message}}</div>
-            <button type="submit" class="btn btn-secondary btn-lg" style="width:150px; text-align: center;">登录</button>
+            <button type="submit" class="btn btn-secondary btn-lg">登录</button>
         </div>
     </form>
   </div>
 
-  <style>
-    .sign-form {
-      height: 45vh;
-      width: 25vw;
-      padding: 20px;
-      background-color: aliceblue;
-      border-radius: 10px;
-    }
-    .sign-card {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 70vh;
-    }
-
-  </style>
 {% endblock %}

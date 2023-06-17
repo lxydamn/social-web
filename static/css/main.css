@@ -1,0 +1,397 @@
+.sign-form {
+	height: 55vh;
+	width: 30%;
+	padding: 1.5em;
+	background-color: aliceblue;
+	border-radius: 10px;
+	margin: 0 auto;
+	margin-top: 3em;
+}
+
+.sign-card {
+	height: 90vh;
+}
+
+p {
+    font-size: 1.3em;
+}
+
+
+#info-avator:hover {
+	transform: rotate(360deg);
+}
+
+.btn-box {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.btn {
+    width: auto;
+	margin-left: 1.2rem;
+	margin-right: 1.2rem;
+}
+
+.page-item:nth-child(odd) {
+    flex-direction: row-reverse;
+}
+
+
+.page-item {
+    margin: 80px auto 80px;
+    display: flex;
+    justify-content: center;
+}
+
+.page-item-img {
+    z-index: 1;
+}
+
+.page-item-info {
+	border-radius: 10px;
+    width: 30em;
+    height: 18em;
+    padding: 3.5em;
+    border: 1px solid #959494;
+    margin-top: 20px;
+}
+.page-item-img img {
+	width: 30rem;
+	border-radius: 0.5rem;
+    transition: 0.3s all ease-out;
+}
+.page-item-img img:hover {
+    box-shadow: 0 0 0.6em #000;
+}
+.page-list {
+	padding-top: 2rem;
+	padding-bottom: 3rem;
+}
+.page-item-info > a {
+	text-decoration: none;
+}
+.page-item-info > a:hover h3 {
+	color: #78c2ad;
+}
+.page-item-info > a:hover h4 {
+	color: #78c2ad;
+}
+
+
+.info-mask {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+	background: rgba(68, 74, 83, 0.1);
+}
+
+#info-avator {
+	border-radius: 100%;
+	padding: 0.4rem;
+	box-shadow: inset 0 0 20px #000;
+	transition: all 1s ease;
+}
+
+.info-username {
+	margin-top: 2rem;
+	padding-top: 1.2rem;
+	font-weight: 900;
+}
+
+.info-bio {
+	margin-top: 10px;
+	padding-bottom: 10px;
+}
+
+.info-text {
+	width: 80%;
+	margin: 0 auto;
+	font-size: 1.2rem;
+	border-radius: 10px;
+	background: rgba(0, 0, 0, 0.5);
+}
+.info-content {
+	text-align: center;
+	z-index: 2;
+	color: #fff;
+}
+
+#info-box-content {
+    overflow: hidden auto;
+    height: 55vh;
+}
+.chat-container {
+    height: 80vh;
+    width: 80%;
+    margin: 5vh auto 0;
+    box-shadow: 0 0 .5em #bababa;
+}
+
+.no-chat-box {
+    display: flex;
+    height: 80vh;
+    align-items: center;
+    justify-content: center;
+}
+#user-bio {
+    resize: none;
+}
+.right-content-block {
+    margin: 1em;
+    padding: 0.6em;
+    font-size: 1rem;
+    word-wrap:break-word;
+    width: 20rem;
+    color: var(--bs-light);
+    background-color:var(--bs-primary);
+    border-radius: 10px;
+    border-top-right-radius: 0px;
+}
+.left-content-block {
+    padding: 10px;
+    margin-left: 10px;
+    margin-top: 5px;
+    color: var(--bs-dark);
+    width: 20rem;
+    word-wrap:break-word;
+    font-size: 1rem;
+    background-color:var(--bs-white);
+    border-radius: 10px;
+    border-top-left-radius: 0px;
+}
+
+.info-item-left>img{
+   flex-shrink: 0;
+   border-radius: 50%;
+   width: 50px;
+   height: 50px;
+}
+.info-item-right>img {
+    flex-shrink: 0;
+    border-radius: 50%;
+    width: 50px;
+   height: 50px;
+}
+.info-item-username {
+    margin: 0;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+.input-group span {
+    width: 160px;
+  }
+  .update-container {
+    height: 70vh;
+    display: flex;
+    align-items: center;
+  }
+  .update-form {
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 30px;
+    width: 50%;
+  }
+.input-box-content {
+    resize: none;
+    height: 25vh;
+}
+.position-absolute {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+.info-item-left {
+    display: flex;
+    text-align: left;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+.info-item-right {
+    display: flex;
+    flex-direction: row-reverse;
+    text-align: right;
+    margin-bottom: 30px;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.list-group-item {
+    display: flex;
+    border: 0;
+    height: 70px;
+} 
+.friend-item img {
+    width: 30%;
+    border-radius: 50%;
+}
+.friend-info-message {
+    margin-top: 10px;
+}
+.friend-info {
+   margin-left: 15px;
+}
+.input-box {
+    background-color:azure;
+    height: 25vh;
+}
+.input-box > textarea {
+    border-radius: 0;
+}
+.chat-box {
+    background-color: aliceblue;
+    box-shadow: 0 0 .5em #bababa;
+    height: 80vh;
+}   
+.search-box {
+    height: 7vh;
+}
+.search-warp {
+    position: sticky;
+}
+.result-box {
+    margin-top: 10px;
+    background-color: aliceblue;
+    min-height: 300px;
+}
+.post-item img {
+    width: 100%;
+    transition: 0.4s all;
+    border-radius: .5em;
+}
+.post-item img:hover {
+    box-shadow: 0 0 .6  em #000;
+}
+.post-item {
+    padding: 10px;
+    margin: 10px;
+}
+.page-item-info>a {
+    text-decoration: none;
+}
+.page-item-info>a:hover h4{
+    color: #78C2AD;
+}
+.page-item-info>a:hover h5{
+    color: #78C2AD;
+}
+.user-item img {
+    width: 100%;
+    border-radius: 50%;
+}
+.user-item {
+    margin: 10px;
+    padding: 10px;
+}
+.user-item-info {
+    padding: 10px;
+}
+.post-item-info a{
+    text-decoration: none; 
+}
+
+.post-item-info a:hover h4 {
+    color: var(--bs-primary);
+}
+.post-item-info a:hover h5 {
+    color: var(--bs-primary);
+}
+
+
+@media (max-width: 1000px) {
+	.sign-form {
+		width: 100%;
+	}
+    .friend-item img {
+        width: 70%;
+        height: 70%;
+    }
+    .list-group-item {
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .friend-info {
+        display: none;
+    }
+    .post-item .col-3 {
+        display: none;
+    }
+
+    
+    .chat-box {
+        height: 90vh;
+    }
+    #info-box-content {
+        height: 70vh;
+    }
+    .input-box-content {
+        height: 30vh;
+    }
+    
+    .input-box {
+        height: 30vh;
+    }
+    .chat-container {
+        width: 95%;
+        margin: 0;
+        margin: 0 auto 0;
+        height: 100vh;
+    }
+    .page-item {
+        display: block;
+        margin: 20px auto 20px;
+    }
+
+    .update-form {
+        width: 100%;
+        padding: 5px;
+    }
+    .page-item-img {
+        width: 100%;
+        text-align: center;
+    }
+    .user-item .col-1 {
+        width: 20%;
+    }
+    .user-item .col-9 {
+        width: 40%;
+    }
+    .page-item-img img {
+        width: 80%; 
+    }
+    .input-box .btn {
+        width: 20%;
+        height: 40px;
+        float: right;
+        margin-right: .5em;
+        margin-bottom: 24vh;
+    }
+    .chat-box .col-2 {
+        width: 15%;
+    }
+    .chat-box .col-10 {
+        width: 85%;
+    }
+    .list-group {
+        height: 100%;
+    }   
+
+    .page-item-info {
+        margin-top: .5em;
+        margin-left: 10%;
+        width: 80%;
+        height: auto;
+        font-size: .2em;
+    }
+
+    .left-content-block {
+        width: 10em;
+    }
+
+    .right-content-block {
+        width: 10em;
+    }
+}
+

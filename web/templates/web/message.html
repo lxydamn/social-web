@@ -1,9 +1,9 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<div class="chat-container container" style="margin-top: 5vh; width: 80%;">
+<div class="chat-container">
     <div class="chat-box row">
-        <div class="col-3" style="padding: 0; background-color: #FFFFFF;">            
+        <div class="col-2" style="padding: 0; background-color: #FFFFFF;">            
             <div class="list-group">
                 <div style="overflow-y:auto; overflow-x:auto; height:80vh;">
                     {% for user in users %}
@@ -12,7 +12,7 @@
                             class="list-group-item list-group-item-action 
                                 {% if opponent == user %} active {% endif %}
                             ">
-                                <img alt="头像" src="{% static user.avator %}" width="55" style="border-radius: 50%; float: left;"/>
+                                <img alt="头像" src="{% static user.avator %}" />
                                 <div class="friend-info">
                                     <div class="friend-info-username"><span>{{user.username}}</span></div>
                                     <div class="friend-info-message">
@@ -29,14 +29,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-9" style="padding: 0;">
+        <div class="col-10" style="padding: 0;">
             <div class="info-box">
                 {% if infos == 'inmessage' %}
                 <div class="no-chat-box"> 
                     <span>您未选中或发起聊天</span>
                 </div>
                 {% else %}
-                    <div id="info-box-content" style="overflow-y:auto; height:55vh;">
+                    <div id="info-box-content" >
                         {% for info in infos %}
                             {% if info.sender.username == user.username %}
                                 <div class="info-item-right clearfix">
@@ -61,7 +61,7 @@
                         {% endfor %}
                     </div>
                     <div class="input-box position-relative">
-                        <textarea id='message-content' class="info-content form-control"></textarea>
+                        <textarea id='message-content' class="input-box-content form-control"></textarea>
                         <button type="button" onclick="send_message()" class="position-absolute bottom-0 end-0 btn btn-primary">发送</button>
                     </div>
                 {% endif %}
@@ -96,13 +96,11 @@
 
     function new_message(message, sender) {
         
-        document.getElementById('message-content').value=""
-
         var box = document.getElementById('info-box-content')
 
         if ( sender === 'right' ) {
             var right_div = `<div class="info-item-right clearfix">
-                                    <img  alt="头像" src=${ "{% static user.avator %}" } width="40" style="border-radius: 50%; float: right;" />
+                                    <img  alt="头像" src=${ "{% static user.avator %}" } />
                                     <div class="info-item-content-right">
                                         <div class="right-content-block">
                                             <p class="text-start">${ message }</p>
@@ -110,9 +108,12 @@
                                     </div>
                                 </div>`
             box.innerHTML += right_div
+            
+            document.getElementById('message-content').value=""
+
         } else {
             var left_div =  `<div class="info-item-left clearfix">
-                                    <img  alt="头像" src=${ "{% static opponent.avator %}" } width="40" style="border-radius: 50%; float: left;" />
+                                    <img  alt="头像" src=${ "{% static opponent.avator %}" } />
                                     <div class="info-item-content-left">
                                         <p class="info-item-username">${"{{opponent.username}}"}</p>
                                         <div class="left-content-block">
@@ -147,100 +148,6 @@
 
 </script>
 <style>
-    .chat-container {
-        height: 100vh;
-    }
-    .no-chat-box {
-        display: flex;
-        height: 80vh;
-        align-items: center;
-        justify-content: center;
-    }
-    .right-content-block {
-        margin-right: 10px;
-        margin-top: 25px;
-        padding: 10px;
-        width: 300px;
-        font-size: 20px;
-        word-wrap:break-word;
-        color: #FFFFFF;
-        background-color:#78C2AD;
-        border-radius: 10px;
-        border-top-right-radius: 0px;
-    }
-    .left-content-block {
-        padding: 10px;
-        margin-left: 10px;
-        margin-top: 5px;
-        color: #000;
-        word-wrap:break-word;
-        width: 300px;
-        font-size: 20px;
-        background-color:#FFFFFF;
-        border-radius: 10px;
-        border-top-left-radius: 0px;
-    }
-    .info-item-left>img{
-       flex-shrink: 0;
-       border-radius: 50%;
-       width: 50px;
-       height: 50px;
-    }
-    .info-item-right>img {
-        flex-shrink: 0;
-        border-radius: 50%;
-        width: 50px;
-       height: 50px;
-    }
-    .info-item-username {
-        margin: 0;
-        margin-left: 10px;
-        margin-right: 5px;
-    }
-    .info-content {
-        resize: none;
-        height: 25vh;
-    }
-    .position-absolute {
-        margin-bottom: 10px;
-        margin-right: 10px;
-    }
-    .info-item-left {
-        display: flex;
-        text-align: left;
-        margin-bottom: 30px;
-        margin-left: 10px;
-        margin-top: 5px;
-    }
-    .info-item-right {
-        display: flex;
-        flex-direction: row-reverse;
-        text-align: right;
-        margin-bottom: 30px;
-        margin-right: 10px;
-        margin-top: 5px;
-    }
-    .list-group-item {
-        display: flex;
-        border: 0;
-        height: 70px;
-    } 
-    .friend-info-message {
-        margin-top: 10px;
-    }
-    .friend-info {
-       margin-left: 15px;
-    }
-    .input-box {
-        background-color:azure;
-        height: 25vh;
-    }
-    .input-box > textarea {
-        border-radius: 0;
-    }
-    .chat-box {
-        background-color: aliceblue;
-        height: 80vh;
-    }   
+    
 </style>
 {% endblock %}
